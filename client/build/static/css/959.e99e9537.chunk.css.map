@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/959.e99e9537.chunk.css","mappings":"AAAA,oBAEI,cADA,eACA","sources":["pages/Signup/Signup.module.scss"],"sourcesContent":[".form {\n    max-width: 350px;\n    flex: 1 1 auto;\n}"],"names":[],"sourceRoot":""}
