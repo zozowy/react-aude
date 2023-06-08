@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { getRecipes } from "../apis";
+import { useSetRecoilState } from "recoil";
+import { recipesState } from "state";
+
 
 export function useFetchRecipes(page) {
-    const [recipes, setRecipes] = useState([]);
+   // const [recipes, setRecipes] = useState([]);
+    const setRecipes = useSetRecoilState(recipesState);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState([]);
+
     useEffect(() => {
         let cancel = false;
         async function fetchData() {
@@ -13,15 +18,20 @@ export function useFetchRecipes(page) {
 
                 const queryParam = new URLSearchParams();
                 if (page) {
-                    queryParam.append('skip', (page - 1) * 18 );
-                    queryParam.append('limit', 18 );
-                    queryParam.append('sort', 'createdAt:-1')
+                    
+                    queryParam.append('limit', 18);
+                    queryParam.append('skip', (page - 1) * 18);
+                    queryParam.append('sort', 'createdAt:-1');
                 }
-                const fetchRecipes = await getRecipes(queryParam);
+                const fetchedRecipes = await getRecipes(queryParam);
                 if (!cancel) {
-                    setRecipes(x => [...x, ...fetchRecipes]);
+                    if (page && page !== 1) {
+                        setRecipes(x => [...x, ...fetchedRecipes]);
+                    } else {
+                        setRecipes(fetchedRecipes);
+                    }
                 }
-                setRecipes(fetchRecipes)
+               // setRecipes(fetchRecipes)
             } catch (e) {
                 console.log('ERREUR');
                 setError('Erreur');
@@ -34,7 +44,7 @@ export function useFetchRecipes(page) {
         }
         fetchData();
         return () => cancel = true;
-    }, [page]);
-    return [[recipes, setRecipes], isLoading, error];
+    }, [page, setRecipes]);
+    return [isLoading, error];
 
 }

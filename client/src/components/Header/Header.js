@@ -4,10 +4,13 @@ import { useContext, useState } from "react";
 import HeaderMenu from "./components/HeaderMenu/HeaderMenu";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context";
+import { useSetRecoilState } from "recoil";
+import { wishtlistDisplayState } from "state";
 
 function Header() {
     const [showMenu, setShowMenu] = useState(false);
     const { user , signout} = useContext(AuthContext);
+    const setWishlistDisplay = useSetRecoilState(wishtlistDisplayState);
     return (
         <header className={`${styles.header} d-flex flex-row align-items-center`}>
             {/* <i className="fa-solid fa-bars mr-15"></i> */}
@@ -18,7 +21,7 @@ function Header() {
                 />
                 </NavLink>
             </div>
-            { user ? 
+            { user ?
             (
                 <ul className={styles.headerList}>
                 <NavLink to="admin">
@@ -27,7 +30,7 @@ function Header() {
                     Admin</button>
                 </NavLink>
 
-                <button className="mr-15 btn btn-reverse-primary">
+                <button onClick={() => setWishlistDisplay(true)} className="mr-15 btn btn-reverse-primary">
                     <i className="fa-solid fa-heart mr-5"></i>
                     <span>Wishlist</span>
                 </button>
@@ -45,11 +48,6 @@ function Header() {
             </ul>
             ) : (
                 <ul className={styles.headerList}>
-
-                <button className="mr-15 btn btn-reverse-primary">
-                    <i className="fa-solid fa-heart mr-5"></i>
-                    <span>Wishlist</span>
-                </button>
                 <NavLink to="signup">
                     <button
                     className="btn btn-primary mr-15">
@@ -69,7 +67,7 @@ function Header() {
             {showMenu && (
                 <>
                     <div onClick={() => setShowMenu(false)} className="calc"></div>
-                    <HeaderMenu/>
+                    <HeaderMenu setWishlistDisplay={ () => setWishlistDisplay(true)} hideMenu= {() => setShowMenu(false)}/>
                 </>
             )}
         </header>

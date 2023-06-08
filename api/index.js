@@ -3,14 +3,16 @@ const express = require('express');
 const cookie = require('cookie-parser');
 
 
+const bodyParser = require("body-parser");
 
 
 const routes = require('./routes');
 
 const app = express();
-app.use(express.static(`${__dirname}/../client/build`));
+app.use(express.static(`${__dirname}/../client`));
 app.use(cookie());
 app.use(express.json());
+app.use(bodyParser.json());
 require ('./database');
 app.use(routes);
 
@@ -19,4 +21,4 @@ app.use('*', (req, res) => {
 })
 
 
-app.listen(8080);
+app.listen(8000);

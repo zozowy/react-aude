@@ -1,10 +1,14 @@
-import { useFetchRecipes } from "../../../../../../hooks/useFetchRecipes";
+import { useFetchRecipes } from "hooks";
 import styles from "./AdminRecipesList.module.scss";
-import { deleteRecipe as deleteR } from '../../../../../../apis';
+import { deleteRecipe as deleteR } from 'apis';
 import { NavLink } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { recipesState } from 'state';
 
 export default function AdminRecipesList() {
-    const [[recipes,  setRecipes]] = useFetchRecipes();
+    useFetchRecipes();
+    const [recipes,  setRecipes] = useRecoilState(recipesState);
+
     async function deleteRecipe(_id) {
         await deleteR(_id);
         setRecipes(recipes.filter((r) => r._id !== _id));
@@ -12,7 +16,7 @@ export default function AdminRecipesList() {
     return (
         <ul className={styles.list}>
             { recipes.length ? recipes.map( r => (
-                <li key={ r._id} className="d-flex align-items-center">
+                <li key={ r._id} className={ `d-flex align-items-center ${styles.li}`}>
                     <span className="flex-fill">
                         {r.title}
                     </span>

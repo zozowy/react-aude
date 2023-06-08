@@ -3,13 +3,17 @@ import styles from './AdminRecipeForm.module.scss';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createRecipe, updateRecipe } from '../../../../../../apis';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { createRecipe, updateRecipe } from 'apis';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { selectActiveRecipe } from 'state';
 
 
 
 function AdminRecipesForm () {
-	const recipe = useLoaderData();
+	//const recipe = useLoaderData();
+    const { recipeId } = useParams();
+    const recipe = useRecoilValue(selectActiveRecipe(recipeId));
 	const navigate = useNavigate();
     const defaultValues = {
         title: recipe ?  recipe.title : '',
