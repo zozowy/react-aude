@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/772.3acb6e58.chunk.css","mappings":"AAAA,mCAEI,gBADA,UACA","sources":["pages/Admin/pages/AdminRecipes/pages/AdminRecipesForm/AdminRecipeForm.module.scss"],"sourcesContent":[".RecipeForm {\n    width: 100%;\n    max-width: 600px;\n}"],"names":[],"sourceRoot":""}

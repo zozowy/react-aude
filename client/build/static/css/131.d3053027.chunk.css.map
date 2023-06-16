@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/131.d3053027.chunk.css","mappings":"AAAA,iCAEI,cADA,eACA","sources":["pages/Profile/Profile.module.scss"],"sourcesContent":[".profileContainer {\n    max-width: 500px;\n    flex: 1 1 auto;\n  }"],"names":[],"sourceRoot":""}
