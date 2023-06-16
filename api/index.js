@@ -1,7 +1,9 @@
 const express = require('express');
 
 const cookie = require('cookie-parser');
-
+const fs = require('fs');
+const https = require('https');
+const http = require('http');
 
 const bodyParser = require("body-parser");
 
@@ -9,6 +11,7 @@ const bodyParser = require("body-parser");
 const routes = require('./routes');
 
 const app = express();
+module.exports = app;
 app.use(express.static(`${__dirname}/../client`));
 app.use(cookie());
 app.use(express.json());
@@ -21,4 +24,4 @@ app.use('*', (req, res) => {
 })
 
 
-app.listen(8000);
+//app.listen(8000);

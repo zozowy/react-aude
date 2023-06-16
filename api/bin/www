@@ -1,0 +1,27 @@
+const fs = require('fs');
+const Url = require('url');
+const https = require('https');
+const http = require('http');
+const app = require('../index');
+require('dotenv').config();
+const keypath=process.env.KEY_PATH;
+const certpath=process.env.CERT_PATH;
+const path = require('path');
+
+
+
+const httpServer = http.createServer((req, res) => {
+  res.writeHead(301, { Location: `https://${ req.headers.host }${ req.url }`});
+  res.end();
+}).listen(8000);
+
+
+const server = https.createServer(
+    {
+      key: fs.readFileSync(path.join(__dirname, keypath)),
+      cert: fs.readFileSync(path.join(__dirname, certpath)),
+    },
+    app
+  );
+  
+  server.listen(443);
